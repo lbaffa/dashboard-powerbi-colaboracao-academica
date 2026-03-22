@@ -1,0 +1,16 @@
+# Arquivos de sistema operacional (Windows/Mac)
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Arquivos temporários do pacote Office (Excel/Word)
+~$*.xls*
+~$*.csv
+~$*.doc*
+~$*.ppt*
+
+# Backups temporários do Power BI (caso gerados)
+*.pbix.backup
+* - Backup.pbix
