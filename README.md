@@ -34,9 +34,9 @@ A análise cobre o período histórico de 2016 a março de 2025, transformando d
 
 Para garantir a performance e a integridade analítica do painel, as seguintes técnicas de Business Intelligence foram aplicadas na construção do `.pbix`:
 
-### 1. Modelagem Dimensional e Resolução de Cardinalidade (Star Schema)
+### 1. Modelagem Dimensional e Resolução de Cardinalidade (Galaxy Schema)
 A base de métricas original (`metrics_bi.csv`) possuía granularidade temporal (cada pesquisador repetia 10 vezes, uma para cada ano analisado). Tentar conectar essa base diretamente a tabelas especializadas gerava um conflito de cardinalidade **Muitos-para-Muitos (*:*)**, quebrando os filtros cruzados do dashboard.
-* **Solução:** Implementação de um autêntico modelo Estrela (*Star Schema*) via **Power Query**. A base original foi particionada: aplicou-se o `Unpivot` para criar Tabelas Fato especializadas (`Fato_Producoes` e `Fato_Orientacoes`) e extraiu-se uma **Tabela Dimensão customizada** (`Dim_Pesq_Areas`), removendo duplicatas para criar uma lista única e confiável de pesquisadores. Essa Dimensão assumiu o centro do modelo (Lado 1), propagando os filtros perfeitamente para as tabelas Fato (Lado Muitos). 
+* **Solução:** Implementação de um autêntico modelo Galaxy Schema via **Power Query**. A base original foi particionada: aplicou-se o `Unpivot` para criar Tabelas Fato especializadas (`Fato_Producoes` e `Fato_Orientacoes`) e extraiu-se uma **Tabela Dimensão customizada** (`Dim_Pesq_Areas`), removendo duplicatas para criar uma lista única e confiável de pesquisadores. Essa Dimensão assumiu o centro do modelo (Lado 1), propagando os filtros perfeitamente para as tabelas Fato (Lado Muitos). 
 * **Isolamento Arquitetural:** Para evitar conflitos de granularidade, a base `lattes_bi.csv` foi isolada, sendo utilizada **exclusivamente** para alimentar a matriz nominal da relação de pesquisadores na Página 1 (Visão Geral). Todos os demais gráficos, séries temporais e cálculos do dashboard foram gerados estritamente a partir da modelagem derivada da `metrics_bi.csv`.
 
 ### 2. Governança e Transparência de Dados
